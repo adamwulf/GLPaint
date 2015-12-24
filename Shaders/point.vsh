@@ -1,9 +1,7 @@
 /*
-     File: PaintingView.h
- Abstract: The class responsible for the finger painting. The class wraps the 
- CAEAGLLayer from CoreAnimation into a convenient UIView subclass. The view 
- content is basically an EAGL surface you render your OpenGL scene into.
-  Version: 1.13
+ File: color.vsh
+ Abstract: A vertex shader that draws points with assigned color.
+ Version: 1.13
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -45,21 +43,19 @@
  
  Copyright (C) 2014 Apple Inc. All Rights Reserved.
  
-*/
+ */
 
-#import <UIKit/UIKit.h>
-#import <OpenGLES/EAGL.h>
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
+attribute vec4 inVertex;
 
-//CLASS INTERFACES:
+uniform mat4 MVP;
+uniform float pointSize;
+uniform lowp vec4 vertexColor;
 
-@interface PaintingView : UIView
+varying lowp vec4 color;
 
-@property(nonatomic, readwrite) CGPoint location;
-@property(nonatomic, readwrite) CGPoint previousLocation;
-
-- (void)erase;
-- (void)setBrushColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
-
-@end
+void main()
+{
+	gl_Position = MVP * inVertex;
+    gl_PointSize = pointSize;
+    color = vertexColor;
+}

@@ -5,7 +5,7 @@ DESCRIPTION:
 
 The GLPaint sample application demonstrates how to support single finger painting using OpenGL ES. This sample also shows how to detect a "shake" motion of the device.
 
-By looking at the code you'll see how to set up an OpenGL ES view and use it for rendering painting strokes. The application creates a brush texture from an image by first drawing the image into a Core Graphics bitmap context. It then uses the bitmap data for the texture. The image used for a texture must have dimensions that are a power of 2. 
+By looking at the code you'll see how to set up an OpenGL ES view and use it for rendering painting strokes. The application creates a brush texture from an image by first drawing the image into a Core Graphics bitmap context. It then uses the bitmap data for the texture.
 
 To use this sample, open it in Xcode and click Build and Go. After the application paints "Shake Me", shake the device to erase the words. Touch a color to choose it. Paint by dragging a finger.
 
@@ -14,23 +14,23 @@ NOTE: When you run the application in the simulator, you can use the Shake Gestu
 ================================================================================
 BUILD REQUIREMENTS:
 
-iOS 4.0 SDK
+iOS 7.0 SDK
 
 ================================================================================
 RUNTIME REQUIREMENTS:
 
-iOS 3.2 or later
+iOS 5.0 or later
 
 ================================================================================
 PACKAGING LIST:
 
 AppController.h
 AppController.m
-UIApplication's delegate class i.e. the central controller of the application.
+UIApplication's delegate class.
 
-PaintingWindow.h
-PaintingWindow.m
-A subclass of UIWindow to handle shake and other motion events.
+PaintingViewController.h
+PaintingViewController.m
+The central controller of the application. Handles shake and other motion events.
 
 PaintingView.h
 PaintingView.m
@@ -51,6 +51,12 @@ The texture used for the paint brush.
 
 ================================================================================
 CHANGES FROM PREVIOUS VERSIONS:
+
+Version 1.13
+Updated for iOS 7 and 64-bit.
+
+Version 1.12
+Updated with OpenGL ES 2.0. Added a root view controller. Moved main controls from the UIApplication delegate to the new PaintingViewController class. Replaced the HSL2RGB() function with UIColor's +colorWithHue:saturation:brightness:alpha:.
 
 Version 1.11
 Updated to take into account the view's contentScaleFactor.
@@ -96,4 +102,4 @@ Version 1.1
 Updated for Beta 2.
 
 ================================================================================
-Copyright (C) 2009-2010 Apple Inc. All rights reserved.
+Copyright (C) 2009-2014 Apple Inc. All rights reserved.

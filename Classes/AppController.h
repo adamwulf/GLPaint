@@ -1,8 +1,7 @@
 /*
      File: AppController.h
- Abstract: The UIApplication delegate class, which is the central controller of
- the application.
-  Version: 1.11
+ Abstract: The UIApplication delegate class.
+  Version: 1.13
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -42,27 +41,12 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2014 Apple Inc. All Rights Reserved.
  
 */
 
-//CLASS INTERFACES:
-
-@class PaintingWindow;
-@class PaintingView;
-@class SoundEffect;
-
 @interface AppController : NSObject <UIApplicationDelegate>
-{
-	PaintingWindow		*window;
-	PaintingView		*drawingView;
 
-	SoundEffect			*erasingSound;
-	SoundEffect			*selectSound;
-	CFTimeInterval		lastTime;
-}
-
-@property (nonatomic, retain) IBOutlet PaintingWindow *window;
-@property (nonatomic, retain) IBOutlet PaintingView *drawingView;
+@property (nonatomic, strong) UIWindow *window;
 
 @end

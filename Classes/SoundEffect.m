@@ -1,7 +1,7 @@
 /*
      File: SoundEffect.m
  Abstract: SoundEffect is a class that loads and plays sound files.
-  Version: 1.11
+  Version: 1.13
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -41,7 +41,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2014 Apple Inc. All Rights Reserved.
  
 */
 
@@ -52,7 +52,7 @@
 // Creates a sound effect object from the specified sound file
 + (id)soundEffectWithContentsOfFile:(NSString *)aPath {
     if (aPath) {
-        return [[[SoundEffect alloc] initWithContentsOfFile:aPath] autorelease];
+        return [[SoundEffect alloc] initWithContentsOfFile:aPath];
     }
     return nil;
 }
@@ -68,17 +68,17 @@
 		// If the file exists, calls Core Audio to create a system sound ID.
         if (aFileURL != nil)  {
             SystemSoundID aSoundID;
-            OSStatus error = AudioServicesCreateSystemSoundID((CFURLRef)aFileURL, &aSoundID);
+            OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef)aFileURL, &aSoundID);
             
             if (error == kAudioServicesNoError) { // success
                 _soundID = aSoundID;
             } else {
                 NSLog(@"Error %d loading sound at path: %@", (int)error, path);
-                [self release], self = nil;
+                self = nil;
             }
         } else {
             NSLog(@"NSURL is nil for path: %@", path);
-            [self release], self = nil;
+            self = nil;
         }
     }
     return self;
@@ -87,7 +87,6 @@
 // Releases resouces when no longer needed.
 -(void)dealloc {
     AudioServicesDisposeSystemSoundID(_soundID);
-    [super dealloc];
 }
 
 // Plays the sound associated with a sound effect object.

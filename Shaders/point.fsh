@@ -1,7 +1,8 @@
 /*
-     File: PaintingWindow.h
- Abstract: A subclass of UIWindow to handle shake and other motion events.
-  Version: 1.11
+ File: color.fsh
+ Abstract: A fragment shader that draws points with assigned color and 
+ texture.
+ Version: 1.13
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -41,14 +42,14 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2010 Apple Inc. All Rights Reserved.
+ Copyright (C) 2014 Apple Inc. All Rights Reserved.
  
-*/
+ */
 
-#import <UIKit/UIKit.h>
+uniform sampler2D texture;
+varying lowp vec4 color;
 
-@interface PaintingWindow : UIWindow {
-
+void main()
+{
+	gl_FragColor = color * texture2D(texture, gl_PointCoord);
 }
-
-@end

@@ -1,8 +1,6 @@
 /*
-     File: PaintingView.h
- Abstract: The class responsible for the finger painting. The class wraps the 
- CAEAGLLayer from CoreAnimation into a convenient UIView subclass. The view 
- content is basically an EAGL surface you render your OpenGL scene into.
+     File: fileUtil.m
+ Abstract: Functions for loading source files.
   Version: 1.13
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
@@ -45,21 +43,32 @@
  
  Copyright (C) 2014 Apple Inc. All Rights Reserved.
  
-*/
+ */
 
-#import <UIKit/UIKit.h>
-#import <OpenGLES/EAGL.h>
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
+#import <Foundation/Foundation.h>
+#import <sys/stat.h>
 
-//CLASS INTERFACES:
+const char *pathForResource(const char *name)
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:name] ofType: nil];
+    return [path fileSystemRepresentation];
+}
 
-@interface PaintingView : UIView
-
-@property(nonatomic, readwrite) CGPoint location;
-@property(nonatomic, readwrite) CGPoint previousLocation;
-
-- (void)erase;
-- (void)setBrushColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
-
-@end
+char *readFile(const char *name)
+{
+	struct stat statbuf;
+	FILE *fh;
+	char *source;
+	
+	fh = fopen(name, "r");
+	if (fh == 0)
+		return 0;
+	
+	stat(name, &statbuf);
+	source = (char *) malloc(statbuf.st_size + 1);
+	fread(source, statbuf.st_size, 1, fh);
+	source[statbuf.st_size] = '\0';
+	fclose(fh);
+	
+	return source;
+}
